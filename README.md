@@ -84,12 +84,15 @@ Output:
 ## 🚀 How to Run the Project
 
 1. Install dependencies
+
    pip install -r requirements.txt
 
-2. Run Jupyter Notebook (training & testing)
+3. Run Jupyter Notebook (training & testing)
+
    jupyter notebook notebook.ipynb
 
-3. OR run the Flask app
+5. OR run the Flask app
+
    python app.py
 
 ---
