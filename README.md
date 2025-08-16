@@ -1,72 +1,109 @@
-🖼️ Image Captioning with Pre-trained Models
+# 📸 Image Captioning using Deep Learning
 
-This project builds a caption generation system that automatically describes images in natural language. It uses a CNN (InceptionV3) for image feature extraction and an LSTM-based RNN for sequence generation. The system is trained and evaluated on the Flickr8k dataset.
+This project implements an **Image Captioning System** that automatically generates descriptive captions for images.  
+It combines a **Convolutional Neural Network (CNN – InceptionV3)** for feature extraction with a **Recurrent Neural Network (RNN – LSTM)** for natural language generation.  
+The model is trained and evaluated on the **Flickr8k dataset**, with performance measured using **BLEU scores**.
 
-📁 Dataset
+---
 
-Source: Flickr8k Dataset (8,000 images + 5 captions per image)
+## 📁 Dataset
+- **Source:** [Flickr8k Dataset](https://github.com/jbrownlee/Datasets/releases/download/Flickr8k/Flickr8k_Dataset.zip)  
+- **Total Images:** 8,000  
+- **Captions:** 5 human-annotated captions per image  
+- **Special Tokens:**  
+  - `startseq` → Start of caption  
+  - `endseq` → End of caption  
 
-Captions: Human-annotated textual descriptions
+---
 
-Usage: Training (80%) and Testing (20%)
+## 📌 Model Workflow
 
-📌 Example:
-Image → a dog running in the grass
-Caption → “a dog is running in the grass”
+| Step | Description |
+|------|-------------|
+| **1. Feature Extraction** | Images passed through **InceptionV3** → 2048-dim feature vector |
+| **2. Caption Preprocessing** | Cleaned, tokenized, and padded with start/end tokens |
+| **3. Model Architecture** | Encoder (Dense layer) + Decoder (Embedding + LSTM) + Softmax |
+| **4. Training** | Input: (Image features + partial caption) → Predict next word |
+| **5. Inference** | Start with `startseq`, predict words until `endseq` |
 
-📊 Feature Descriptions (Model Input/Output)
-Feature	Description	Role in Captioning
-Image	Raw image (JPEG/PNG)	Input for CNN (InceptionV3)
-Feature Vector	2048-dim extracted from InceptionV3	Encoded visual representation
-Caption Tokens	Text captions with <start> and <end> markers	Input/output for LSTM sequence model
-Vocabulary	Unique words mapped to integers	Required for embedding + generation
-📊 Algorithms / Models Used
+---
 
-InceptionV3 (CNN) → Pre-trained on ImageNet, used for feature extraction
+## 📊 Algorithms & Techniques
+- **CNN (InceptionV3)** → Feature extraction  
+- **RNN (LSTM)** → Caption generation  
+- **BLEU Scores (1–4)** → Evaluation metric  
 
-LSTM (RNN) → Generates captions word by word
+---
 
-Tokenizer → Converts captions into integer sequences
+## 📌 Key Features
+- Uses **InceptionV3 (pre-trained on ImageNet)** for robust visual features  
+- Generates captions via **LSTM** sequence modeling  
+- Evaluation with **BLEU-1 to BLEU-4**  
+- Deployable via **Flask Web App** (optional ngrok for sharing)  
+- Simple **image upload interface** for inference  
 
-BLEU Score Evaluation → Compares generated vs. reference captions
+---
 
-📌 Key Features
+## 🔧 Tech Stack
+- **Programming Language:** Python  
+- **Libraries:** `TensorFlow/Keras`, `NLTK`, `Flask`, `Bootstrap`, `Ngrok`  
 
-Extracts visual features from images using transfer learning
+---
 
-Generates captions with LSTM-based sequence model
+## 📈 Model Performance Summary (BLEU Scores)
 
-Evaluated using BLEU-1 to BLEU-4 scores
+| Metric   | Score |
+|----------|-------|
+| **BLEU-1** | ~0.58 |
+| **BLEU-2** | ~0.36 |
+| **BLEU-3** | ~0.23 |
+| **BLEU-4** | ~0.14 |
 
-Provides Flask web interface for real-time captioning
+---
 
-Ngrok integration for sharing app publicly
+## 📊 Visualization
+_Comparison of BLEU scores across n-grams_  
 
-🔧 Tech Stack
+**Example 
+<img width="940" height="581" alt="image" src="https://github.com/user-attachments/assets/40b13055-14d0-4ad0-844e-661be111cfd4" />
 
-Programming Language: Python
+Output:**  
+<img width="940" height="549" alt="image" src="https://github.com/user-attachments/assets/b8ced75f-0343-43ac-8ba5-47ef7f12b812" />
 
-Libraries: TensorFlow/Keras, NumPy, Pandas, NLTK, Matplotlib, Seaborn
 
-Deployment: Flask, Bootstrap, Ngrok
+## 🚀 How to Run the Project
 
-📈 Model Performance Summary
-Metric	Score
-BLEU-1	0.58 (good keyword overlap)
-BLEU-2	0.36
-BLEU-3	0.23
-BLEU-4	0.14 (sentence-level fluency)
+1. Install dependencies
+   pip install -r requirements.txt
 
-👉 Model performs well for short captions but struggles with longer sentence structure.
+2. Run Jupyter Notebook (training & testing)
+   jupyter notebook notebook.ipynb
 
-📊 Visualization
+3. OR run the Flask app
+   python app.py
 
-Training loss curves
+---
 
-Caption predictions vs. ground truth
+## 🔮 Future Improvements
+- Implement Beam Search for improved fluency
+- Add Attention Mechanism / Transformers
+- Train on larger datasets (MS-COCO) 
+- Fine-tune CNN layers for better features
+- Integrate GPT-based caption refinement
 
-Performance comparison with BLEU metrics
+---
 
-🚀 How to Run the Project
+## 📄 License
+This project is licensed under the **MIT License**.
 
-Clone the repository:
+---
+
+## 👤 Author
+**Kadambala Eitish**  
+📧 eitishkadambala@gmail.com 
+🔗 [GitHub](https://github.com/Eitish24) | [LinkedIn](https://www.linkedin.com/in/kadambala-eitish0509/)
+
+
+
+
+
