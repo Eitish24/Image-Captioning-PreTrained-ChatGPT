@@ -61,6 +61,16 @@ The model is trained and evaluated on the **Flickr8k dataset**, with performance
 
 ---
 
+## 📈 BLEU Score Explanation
+
+- **BLEU-1 (0.58):** Good unigram overlap — the model selects relevant keywords from reference captions.
+- **BLEU-2 (0.36) & BLEU-3 (0.23):** Moderate performance in generating short, meaningful phrases.
+- **BLEU-4 (0.14):** Lower full-sequence fluency, indicating grammar or longer dependencies may need refinement.
+
+> ℹ️ While BLEU-4 is modest, the model shows reasonable descriptive capability. It can be improved with techniques like **beam search**, **attention mechanisms**, **transformers**, or **fine-tuning**.
+
+---
+
 ## 📊 Visualization
 _Comparison of BLEU scores across n-grams_  
 
