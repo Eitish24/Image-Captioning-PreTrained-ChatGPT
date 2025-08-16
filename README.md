@@ -64,10 +64,10 @@ The model is trained and evaluated on the **Flickr8k dataset**, with performance
 ## 📊 Visualization
 _Comparison of BLEU scores across n-grams_  
 
-**Example 
+Example 
 <img width="940" height="581" alt="image" src="https://github.com/user-attachments/assets/40b13055-14d0-4ad0-844e-661be111cfd4" />
 
-Output:**  
+Output:
 <img width="940" height="549" alt="image" src="https://github.com/user-attachments/assets/b8ced75f-0343-43ac-8ba5-47ef7f12b812" />
 
 
