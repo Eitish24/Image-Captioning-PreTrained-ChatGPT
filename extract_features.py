@@ -1,26 +1,16 @@
 from tensorflow.keras.applications.inception_v3 import InceptionV3, preprocess_input
 from tensorflow.keras.models import Model
 import numpy as np
-import os
 from PIL import Image
-from tqdm import tqdm
 
-def extract_features(directory):
-    model = InceptionV3(weights='imagenet')
-    model = Model(inputs=model.input, outputs=model.layers[-2].output)
-    features = dict()
-    for img_name in tqdm(os.listdir(directory)):
-        if not img_name.lower().endswith('.jpg'):
-            continue
-        filename = os.path.join(directory, img_name)
-        image = Image.open(filename).resize((299, 299)).convert('RGB')
-        image = np.array(image)
-        image = np.expand_dims(image, axis=0)
-        image = preprocess_input(image)
-        feature = model.predict(image, verbose=0)
-        image_id = img_name.split('.')[0]
-        features[image_id] = feature.flatten()
-    return features
+# Load model once at module level
+base_model = InceptionV3(weights='imagenet')
+model = Model(inputs=base_model.input, outputs=base_model.layers[-2].output)
 
-# Assuming images_dir is defined already:
-features = extract_features(images_dir)
+def extract_feature_single_image(img_path):
+    img = Image.open(img_path).resize((299, 299)).convert('RGB')
+    x = np.array(img)
+    x = np.expand_dims(x, axis=0)
+    x = preprocess_input(x)
+    feature = model.predict(x, verbose=0)
+    return feature
