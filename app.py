@@ -1,9 +1,4 @@
-# app.py
 import os
-import sys
-import threading
-import webbrowser
-import time
 import numpy as np
 import pickle
 import base64
@@ -11,12 +6,12 @@ from flask import Flask, request, render_template_string, make_response
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from extract_features import extract_feature_single_image
-from pyngrok import ngrok  
 
 # Load model and tokenizer
 print("Loading model and tokenizer...")
-MODEL_PATH = 'model.keras'
-TOKENIZER_PATH = 'tokenizer.pkl'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model.keras")
+TOKENIZER_PATH = os.path.join(BASE_DIR, "tokenizer.pkl")
 MAX_LENGTH = 34
 
 model = load_model(MODEL_PATH)
@@ -56,33 +51,12 @@ def index():
         <title>Image Caption Generator</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <style>
-            body {
-                background-color: #e6f2ff;
-                font-family: 'Segoe UI', sans-serif;
-            }
-            .wrapper {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-            }
-            .box {
-                background-color: #ffffff;
-                padding: 40px;
-                border-radius: 12px;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                width: 100%;
-                max-width: 500px;
-            }
-            img {
-                max-width: 100%;
-                height: auto;
-                margin-top: 20px;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                display: none;
-            }
+            body { background-color: #e6f2ff; font-family: 'Segoe UI', sans-serif; }
+            .wrapper { display: flex; justify-content: center; align-items: center; height: 100vh; }
+            .box { background-color: #fff; padding: 40px; border-radius: 12px;
+                   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); text-align: center; width: 100%; max-width: 500px; }
+            img { max-width: 100%; height: auto; margin-top: 20px; border-radius: 10px;
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.1); display: none; }
         </style>
     </head>
     <body>
@@ -113,7 +87,6 @@ def index():
     </html>
     """
     return make_response(render_template_string(html))
-
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -154,22 +127,6 @@ def predict():
     """
     return make_response(render_template_string(html))
 
-# ---------- Run Flask and ngrok ----------
-def run_flask():
-    app.run(host="0.0.0.0", port=5000, debug=True, use_reloader=False)
-
 if __name__ == "__main__":
-    if "ipykernel" in sys.modules:
-        print("Running inside Jupyter Notebook...")
-
-        # Start Flask in a thread
-        threading.Thread(target=run_flask).start()
-        time.sleep(1)
-
-        # Start ngrok and get public URL
-        public_url = ngrok.connect(5000)
-        print(" * ngrok tunnel running at:", public_url)
-        webbrowser.open(public_url)
-    else:
-        print("Running in terminal...")
-        app.run(debug=True, host="0.0.0.0")
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
