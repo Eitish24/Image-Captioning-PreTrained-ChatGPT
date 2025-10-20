@@ -1,7 +1,9 @@
 Flask
 tensorflow
+keras
+pillow
 numpy
-pandas
-pickle-mixin
-pyngrok
+tqdm
 gunicorn
+matplotlib
+pandas
